@@ -25,7 +25,9 @@ public class CameraController : MonoBehaviour
 
     Transform _ball, _car;
     List<Transform> _allCars = new List<Transform>();
-    int _actualCarIndex = 0;
+
+    [SerializeField]
+    int _actualCarIndex = 2;
 
     Vector3 _checkVelocity;
     Vector3 _prevPosistion;
