@@ -17,8 +17,6 @@ public class ShipBoosting : MonoBehaviour
     public float boostForceMultiplier = 1f;
     public float boostAmount = 32f;
 
-
-
     private void Start()
     {
         _style = new GUIStyle();

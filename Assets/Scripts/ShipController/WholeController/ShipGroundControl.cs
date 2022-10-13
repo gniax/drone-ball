@@ -15,7 +15,7 @@ public class ShipGroundControl : MonoBehaviour
     public bool disableGroundStabilization;
     public bool disableWallStabilization;
     public bool disableDrift;
-    [Header("Steering")] [Range(0, 100)] public float turnRadiusCoefficient = 50;
+    [Header("Steering")] [Range(0, 360)] public float turnRadiusCoefficient = 360;
     public float currentSteerAngle;
     public float driftFactor = 0.5f;
 
@@ -40,7 +40,7 @@ public class ShipGroundControl : MonoBehaviour
             ApplyForwardForce(forwardAcceleration);
         }
         currentSteerAngle = CalculateSteerAngle();
-        transform.localRotation = Quaternion.Euler(Vector3.up * currentSteerAngle);
+        transform.rotation = Quaternion.Euler(Vector3.one * currentSteerAngle);
     }
 
     private void ApplyStabilizationWall()
@@ -135,7 +135,7 @@ public class ShipGroundControl : MonoBehaviour
 
     private float CalculateSteerAngle()
     {
-        var curvature = 1 / GetTurnRadius(_controller.forwardSpeed);
+        var curvature = GetTurnRadius(_controller.forwardSpeed);
         return _inputManager.steerInput * curvature * turnRadiusCoefficient;
     }
 
