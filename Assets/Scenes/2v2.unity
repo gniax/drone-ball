@@ -2623,10 +2623,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControllableDrone
       objectReference: {fileID: 0}
-    - target: {fileID: 3243903673351494462, guid: 90da00242e1c46f48b5118695f29a488, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 99239f9c3766fb54b8f92c8b22fc3dc9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90da00242e1c46f48b5118695f29a488, type: 3}
 --- !u!4 &4515702784015334965
