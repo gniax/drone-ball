@@ -19,6 +19,9 @@ public class ShipGroundControl : MonoBehaviour
     public float currentSteerAngle;
     public float driftFactor = 0.5f;
 
+    private float _yaw;
+    private float _roll;
+    private float _pitch;
 
     void Start()
     {
@@ -31,16 +34,21 @@ public class ShipGroundControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyStabilizationFloor();
-        ApplyStabilizationWall();
+        //ApplyStabilizationFloor();
+        //ApplyStabilizationWall();
         var forwardAcceleration = CalcForwardForce(_inputManager.throttleInput);
         //ApplyWheelForwardForce(forwardAcceleration);
         if (Mathf.Abs(_inputManager.throttleInput) >= 0.0001f) 
         {
             ApplyForwardForce(forwardAcceleration);
         }
-        currentSteerAngle = CalculateSteerAngle();
-        transform.rotation = Quaternion.Euler(Vector3.one * currentSteerAngle);
+
+        _yaw = _inputManager.yawInput;
+        _pitch = _inputManager.pitchInput;
+        _roll = _inputManager.rollInput;
+
+        Quaternion target = Quaternion.Euler(_pitch, _yaw, _roll);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime *0.5f);
     }
 
     private void ApplyStabilizationWall()

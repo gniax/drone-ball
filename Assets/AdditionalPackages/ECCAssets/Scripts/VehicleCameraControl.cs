@@ -200,7 +200,7 @@ public class VehicleCameraControl : MonoBehaviour
 
 
 	void DoMouseOrbit ()
-		{
+	{
 		if (target == null) return;
 
 		m_orbitX += Input.GetAxis("Mouse X") * orbitSettings.horizontalSpeed;
@@ -213,5 +213,5 @@ public class VehicleCameraControl : MonoBehaviour
 		m_orbitDistance = Mathf.Lerp(m_orbitDistance, orbitSettings.distance, orbitSettings.distanceDamping * Time.deltaTime);
 		m_transform.rotation = Quaternion.Slerp(m_transform.rotation, Quaternion.Euler(m_orbitY, m_orbitX, 0), Time.deltaTime * orbitSettings.orbitDamping);
 		m_transform.position = target.position + m_transform.rotation * new Vector3(0.0f, 0.0f, -m_orbitDistance);
-		}
 	}
+}

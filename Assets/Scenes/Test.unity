@@ -281,7 +281,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187938178}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47cbfe5898077804ea60adacae1aa450, type: 3}
   m_Name: 
@@ -302,7 +302,7 @@ MonoBehaviour:
   disableGroundStabilization: 0
   disableWallStabilization: 0
   disableDrift: 0
-  turnRadiusCoefficient: 360
+  turnRadiusCoefficient: 128
   currentSteerAngle: 0
   driftFactor: 0
 --- !u!114 &187938184
@@ -16039,7 +16039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6507c54fe9dbc7a41b08faa9cb397bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fovSpeed: 1
+  fovSpeed: 2
 --- !u!81 &1803217570
 AudioListener:
   m_ObjectHideFlags: 0
@@ -26290,7 +26290,7 @@ Rigidbody:
   m_GameObject: {fileID: 6754612088428090115}
   serializedVersion: 2
   m_Mass: 180
-  m_Drag: 0.05
+  m_Drag: 0.5
   m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
