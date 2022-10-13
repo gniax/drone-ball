@@ -55,6 +55,7 @@ namespace MatchController
             /*
             if (_matchTimeController.MatchTimer < 1.0f && !_matchTimeController.Overtime)
             {
+                if (_b != null)
                 _matchTimeController.paused = !_b.isTouchedGround;
             }
             */

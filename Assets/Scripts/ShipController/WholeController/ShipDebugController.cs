@@ -10,8 +10,11 @@ public class ShipDebugController : MonoBehaviour
     private void Start()
     {
         _sphereArray = GetComponentsInChildren<ShipGroundTrigger>();
-
-        _isDrawRaycasts = _sphereArray[0].isDrawContactLines;
+        int sphereArrayLength = _sphereArray.Length;
+        if (sphereArrayLength > 0)
+        {
+            _isDrawRaycasts = _sphereArray[0].isDrawContactLines;
+        }
     }
     
     //[Button("@\"Draw All Contact Lines: \" + _isDrawRaycasts", ButtonSizes.Large)]

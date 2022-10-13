@@ -134,6 +134,7 @@ public class CameraController : MonoBehaviour
 
         if (grounded)
         {
+            Debug.LogError("azeez");
             desiredPosition = _car.position + Vector3.up * cameraHeight;
             //desiredPosition = _car.position + _car.up * cameraHeight;
         }

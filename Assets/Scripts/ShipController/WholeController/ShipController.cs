@@ -131,7 +131,7 @@ public class ShipController : MonoBehaviour
     void DownForce()
     {
         if (shipState == ShipStates.AllCornersSurface || shipState == ShipStates.Ground)
-            _rb.AddForce(-transform.up * 5, ForceMode.Acceleration);
+            _rb.AddForce(-transform.up * 2, ForceMode.Acceleration);
     }
 
     # region GUI
