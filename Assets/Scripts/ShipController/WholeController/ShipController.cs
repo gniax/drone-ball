@@ -138,7 +138,7 @@ public class ShipController : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10.0f, 40.0f, 150, 130), $"{forwardSpeed:F2} m/s {forwardSpeed * 100:F0} uu/s", _style);
+        //GUI.Label(new Rect(10.0f, 40.0f, 150, 130), $"{forwardSpeed:F2} m/s {forwardSpeed * 100:F0} uu/s", _style);
         //GUI.Label(new Rect(30.0f, 40.0f, 150, 130), string.Format("turnRadius: {0:F2} m curvature: {1:F4}", turnRadius, curvature), style);
         //GUI.Label(new Rect(30.0f, 60.0f, 150, 130), $"car state: {carState.ToString()}", _style);
     }

@@ -28,6 +28,7 @@ public class ShipAirControl : MonoBehaviour
         _cogLow = transform.Find("cogLow");
         _inputManager = GetComponentInParent<InputManager>();
         _controller = GetComponent<ShipController>();
+        _shipDodging = GetComponent<ShipDodging>();
     }
 
     void Update()

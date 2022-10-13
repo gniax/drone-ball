@@ -87,13 +87,13 @@ public class TeamController : MonoBehaviour
                 if (playerCount % 2 == 0)
                 {
                     TeamBlueList.Add( child.gameObject );
-                    Material[] materials = child.Find("CubeController").Find("Body Mesh").Find("Octane").GetComponent<Renderer>().materials;
+                    Material[] materials = child.Find("ShipController").Find("Body Mesh").Find("Drone").GetComponent<MeshRenderer>().materials;
                     FindAndDyeMaterial(materials, "Red", new Color(0.0f, 0.48f, 1.0f));
                 }
                 else
                 {
                     TeamOrangeList.Add( child.gameObject );
-                    Material[] materials = child.Find("CubeController").Find("Body Mesh").Find("Octane").GetComponent<Renderer>().materials;
+                    Material[] materials = child.Find("ShipController").Find("Body Mesh").Find("Drone").GetComponent<MeshRenderer>().materials;
                     FindAndDyeMaterial(materials, "Red", new Color(0.8f, 0.4f, 0.0f));
                 }
                 playerCount++;

@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -4753267828732346143
     second: RotatorRight|RotatorRightAction
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Drone__Drone_D_tga
+    second: {fileID: 2100000, guid: 3a87e73634f6e674399fe33018456d3a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
