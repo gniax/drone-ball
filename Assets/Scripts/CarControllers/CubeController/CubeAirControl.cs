@@ -14,9 +14,9 @@ public class CubeAirControl : MonoBehaviour
     private CubeJumping _cubeJumping;
     
     #region Torque Coefficients for rotation and drag
-    const float Tr = 36.07956616966136f; // torque coefficient for roll
-    const float Tp = 12.14599781908070f; // torque coefficient for pitch
-    const float Ty = 8.91962804287785f; // torque coefficient for yaw
+    const float Tr = 5.07956616966136f; // torque coefficient for roll
+    const float Tp = 4.14599781908070f; // torque coefficient for pitch
+    const float Ty = 3.91962804287785f; // torque coefficient for yaw
     const float Dr = -4.75f; // drag coefficient for roll
     const float Dp = -2.85f; // drag coefficient for pitch
     const float Dy = -1.886491900437232f; // drag coefficient for yaw
@@ -51,12 +51,12 @@ public class CubeAirControl : MonoBehaviour
         if (!_cubeJumping.isDodge || _cubeJumping.isCancelled)
         {
             // pitch
-            _rb.AddTorque(Tp * _inputPitch * -_cogLow.right, ForceMode.Acceleration);
+            _rb.AddTorque(Tp * _inputPitch * -_cogLow.right, ForceMode.Impulse);
             if (isUseDamperTorque)
             {
                 _rb.AddTorque(
                     _cogLow.right * (Dp * (1 - Mathf.Abs(_inputPitch)) * _cogLow.InverseTransformDirection(_rb.angularVelocity).x),
-                    ForceMode.Acceleration
+                    ForceMode.Impulse
                 );
             }
         }
@@ -64,21 +64,21 @@ public class CubeAirControl : MonoBehaviour
         if (!_cubeJumping.isDodge)
         {
             // roll
-            _rb.AddTorque(Tr * _inputRoll * _cogLow.forward, ForceMode.Acceleration);
+            _rb.AddTorque(Tr * _inputRoll * _cogLow.forward, ForceMode.Impulse);
             if (isUseDamperTorque)
             {
                 _rb.AddTorque(
                     _cogLow.forward * Dr * _cogLow.InverseTransformDirection(_rb.angularVelocity).z,
-                    ForceMode.Acceleration
+                    ForceMode.Impulse
                 );
             }
             //yaw
-            _rb.AddTorque(Ty * _inputYaw * _cogLow.up, ForceMode.Acceleration);
+            _rb.AddTorque(Ty * _inputYaw * _cogLow.up, ForceMode.Impulse);
             if (isUseDamperTorque)
             {
                 _rb.AddTorque(
                     _cogLow.up * (Dy * (1 - Mathf.Abs(_inputYaw)) * _cogLow.InverseTransformDirection(_rb.angularVelocity).y),
-                    ForceMode.Acceleration
+                    ForceMode.Impulse
                 );
             }
         }

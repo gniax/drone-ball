@@ -32,9 +32,9 @@ public class GroundTrigger : MonoBehaviour
         isTouchingSurface = _isColliderContact;
 
         //TODO: this class should only do raycasts and sphere collider ground detection. Move to CubeWheel or CubeController
-        if (isTouchingSurface) {
-            ApplyStickyForces(StickyForceConstant * 5, _rayContactPoint, -_rayContactNormal);
-        }
+        //if (isTouchingSurface) {
+        //    ApplyStickyForces(StickyForceConstant * 5, _rayContactPoint, -_rayContactNormal);
+        //}
         
     }
 

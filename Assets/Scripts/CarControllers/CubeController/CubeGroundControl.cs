@@ -36,10 +36,13 @@ public class CubeGroundControl : MonoBehaviour
         ApplyStabilizationFloor();
         ApplyStabilizationWall();
         var forwardAcceleration = CalcForwardForce(_inputManager.throttleInput);
-        ApplyWheelForwardForce(forwardAcceleration);
-
+        //ApplyWheelForwardForce(forwardAcceleration);
+        if (Mathf.Abs(_inputManager.throttleInput) >= 0.0001f) 
+        {
+            ApplyForwardForce(forwardAcceleration);
+        }
         currentSteerAngle = CalculateSteerAngle();
-        ApplyWheelRotation(currentSteerAngle);
+        transform.localRotation = Quaternion.Euler(Vector3.up * currentSteerAngle);
     }
 
     private void ApplyStabilizationWall()
@@ -108,6 +111,17 @@ public class CubeGroundControl : MonoBehaviour
             if (_controller.isCanDrive && Mathf.Abs(_inputManager.throttleInput) >= 0.0001f)
                 wheel.ApplyForwardForce(forwardAcceleration / 4);
         }
+    }
+
+    public void ApplyForwardForce(float force)
+    {
+        _rb.AddForce(force * transform.forward, ForceMode.Acceleration);
+
+        //if (_controller.is) return;
+
+        // Kill velocity to 0 for small car velocities
+        if (force == 0 && _controller.forwardSpeedAbs < 0.1 && !_inputManager.isDrift)
+            _rb.velocity -= Vector3.Dot(_rb.velocity, transform.forward) * transform.forward;
     }
 
     private void ApplyWheelRotation(float steerAngle)

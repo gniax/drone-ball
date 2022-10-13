@@ -63,6 +63,14 @@ public class TeamController : MonoBehaviour
 
     }
 
+    void FindAndDyeMaterial(Material[] materials, Color color)
+    {
+        foreach (Material mat in materials)
+        {
+            mat.color = color;
+        }
+    }
+
     void FindAndDyeMaterial(Material[] materials, string name, Color color)
     {
         foreach (Material mat in materials)
@@ -84,17 +92,29 @@ public class TeamController : MonoBehaviour
             Transform child = transform.GetChild(i);
             if (child.tag == "ControllableCar")
             {
+                var lShipManager = child.GetComponent<ShipManager>();
+                if (lShipManager == null)
+                {
+                    continue;
+                }
+
                 if (playerCount % 2 == 0)
                 {
                     TeamBlueList.Add( child.gameObject );
-                    Material[] materials = child.Find("CubeController").Find("Body Mesh").Find("Octane").GetComponent<Renderer>().materials;
-                    FindAndDyeMaterial(materials, "Red", new Color(0.0f, 0.48f, 1.0f));
+                    Material[] materials = lShipManager.MeshRenderer?.materials;
+                    if (lShipManager.MeshRenderer != null)
+                    {
+                        FindAndDyeMaterial(materials, new Color(0.0f, 0.48f, 1.0f));
+                    }
                 }
                 else
                 {
                     TeamOrangeList.Add( child.gameObject );
-                    Material[] materials = child.Find("CubeController").Find("Body Mesh").Find("Octane").GetComponent<Renderer>().materials;
-                    FindAndDyeMaterial(materials, "Red", new Color(0.8f, 0.4f, 0.0f));
+                    Material[] materials = lShipManager.MeshRenderer.materials;
+                    if (lShipManager.MeshRenderer != null)
+                    {
+                        FindAndDyeMaterial(materials, new Color(0.8f, 0.4f, 0.0f));
+                    }
                 }
                 playerCount++;
             }

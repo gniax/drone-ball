@@ -109,7 +109,20 @@ public class Boostpad : MonoBehaviour
 
     private void PickUpBoost(GameObject car)
     {
+        
         var cube = car.GetComponentInChildren<CubeBoosting>();
+        if (cube == null)
+        {
+            var ship = car.GetComponentInChildren<ShipBoosting>();
+            bool lIsBoostFull = ship.IncreaseBoost(boostAmount); //IncreaseBoost returns true, if boost was already at 100
+            if (!lIsBoostFull)
+            {
+                _lastPickup = Time.time;
+                _isActive = false;
+            }
+            return;
+        }
+
         bool isBoostFull = cube.IncreaseBoost(boostAmount); //IncreaseBoost returns true, if boost was already at 100
         if (!isBoostFull)
         {
