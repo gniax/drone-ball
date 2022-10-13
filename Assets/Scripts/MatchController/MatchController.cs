@@ -78,16 +78,16 @@ namespace MatchController
         {
             int delay = 3;
             
- 
             for (int i = delay; i >= 0; --i)
             {
-                Debug.LogWarning("bonjour" + Time.time);
+                if (informationMessage?.text == null) continue;
                 char pluriel = i <= 1 ? '\0' : 's';
                 informationMessage.text = $"ESIPE VS ESIEE\nLa partie va commencer dans {i} seconde{pluriel} !";
                 yield return new WaitForSeconds(1f);
             }
 
-            informationMessage.text = "";
+            if (informationMessage?.text != null)
+                informationMessage.text = "";
             _hasStarted = false;
         }
 

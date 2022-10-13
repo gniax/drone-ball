@@ -5651,6 +5651,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbabf819ac10b4e4f8daa26617f73533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreTMP: {fileID: 0}
   paused: 0
   matchTimeSeconds: 300
 --- !u!114 &799813837
@@ -5677,6 +5678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b954286e02a4f258a6045f9f3f569ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  informationMessage: {fileID: 0}
   ExplosionParticleSystem: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
 --- !u!1 &900602608
 GameObject:
@@ -26276,7 +26278,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6754612088428090115}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2fcec0097665e74fbec36bfc73d7dc7, type: 3}
   m_Name: 
@@ -26289,9 +26291,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6754612088428090115}
   serializedVersion: 2
-  m_Mass: 180
+  m_Mass: 1
   m_Drag: 0.5
-  m_AngularDrag: 1
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

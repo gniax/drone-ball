@@ -48,7 +48,8 @@ public class ShipGroundControl : MonoBehaviour
         _roll = _inputManager.rollInput;
 
         Quaternion target = Quaternion.Euler(_pitch, _yaw, _roll);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime *0.5f);
+        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, target, Time.deltaTime * 2.0f );
+
     }
 
     private void ApplyStabilizationWall()
