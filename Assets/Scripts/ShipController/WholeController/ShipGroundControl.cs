@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(CubeController))]
-public class CubeGroundControl : MonoBehaviour
+[RequireComponent(typeof(ShipController))]
+public class ShipGroundControl : MonoBehaviour
 {
     private const float NaiveRotationForce = 5;
     private const float NaiveRotationDampeningForce = -10;
 
 
     private Rigidbody _rb;
-    private CubeController _controller;
+    private ShipController _controller;
     private InputManager _inputManager;
-    private CubeWheel[] _wheelArray;
-    private CarCollision _carCollision;
+    private ShipCollision _shipCollision;
 
     public bool disableGroundStabilization;
     public bool disableWallStabilization;
@@ -24,10 +23,9 @@ public class CubeGroundControl : MonoBehaviour
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
-        _controller = GetComponent<CubeController>();
-        _wheelArray = GetComponentsInChildren<CubeWheel>();
+        _controller = GetComponent<ShipController>();
         _inputManager = GetComponentInParent<InputManager>();
-        _carCollision = GetComponentInParent<CarCollision>();
+        _shipCollision = GetComponentInParent<ShipCollision>();
     }
 
 
@@ -53,7 +51,7 @@ public class CubeGroundControl : MonoBehaviour
         }
 
         if (Mathf.Abs(Vector3.Dot(Vector3.up, transform.up)) > 0.95f ||
-            _controller.carState == CubeController.CarStates.Air || _controller.numWheelsSurface < 2)
+            _controller.shipState == ShipController.ShipStates.Air || _controller.numCornersSurface < 2)
         {
             return;
         }
@@ -73,43 +71,31 @@ public class CubeGroundControl : MonoBehaviour
             return;
         }
 
-        if (_controller.carState == CubeController.CarStates.Air
-            || _controller.numWheelsSurface >= 3)
+        if (_controller.shipState == ShipController.ShipStates.Air
+            || _controller.numCornersSurface >= 3)
         {
             return;
         }
 
-        if (_carCollision == null || _carCollision.surfaceNormal == null)
+        if (_shipCollision == null || _shipCollision.surfaceNormal == null)
         {
             return;
         }
 
-        var torqueDirection = -Mathf.Sign(Vector3.SignedAngle(_carCollision.surfaceNormal, _rb.transform.up,
+        var torqueDirection = -Mathf.Sign(Vector3.SignedAngle(_shipCollision.surfaceNormal, _rb.transform.up,
             _controller.cogLow.transform.forward));
         var torqueForceMode = ForceMode.Acceleration;
         var factor = 50.0f;
-        if (_controller.carState == CubeController.CarStates.BodyGroundDead)
+        if (_controller.shipState == ShipController.ShipStates.BodyGroundDead)
         {
             torqueForceMode = ForceMode.VelocityChange;
             factor = 0.4f;
         }
 
         _rb.AddTorque(_controller.cogLow.transform.forward * factor * torqueDirection, torqueForceMode);
-        if (_controller.carState == CubeController.CarStates.SomeWheelsSurface)
+        if (_controller.shipState == ShipController.ShipStates.SomeCornersSurface)
         {
-            _rb.AddForce(-_carCollision.surfaceNormal * 3.25f, ForceMode.Acceleration);
-        }
-    }
-
-    private void ApplyWheelForwardForce(float forwardAcceleration)
-    {
-        // Apply forces to each wheel
-        foreach (var wheel in _wheelArray)
-        {
-            //TODO: Func. call like this below OR Wheel class fetches data from this class?
-            // Also probably should be an interface to a concrete implementation. Same for the NaiveGroundControl below.
-            if (_controller.isCanDrive && Mathf.Abs(_inputManager.throttleInput) >= 0.0001f)
-                wheel.ApplyForwardForce(forwardAcceleration / 4);
+            _rb.AddForce(-_shipCollision.surfaceNormal * 3.25f, ForceMode.Acceleration);
         }
     }
 
@@ -122,17 +108,6 @@ public class CubeGroundControl : MonoBehaviour
         // Kill velocity to 0 for small car velocities
         if (force == 0 && _controller.forwardSpeedAbs < 0.1 && !_inputManager.isDrift)
             _rb.velocity -= Vector3.Dot(_rb.velocity, transform.forward) * transform.forward;
-    }
-
-    private void ApplyWheelRotation(float steerAngle)
-    {
-        // Apply steer angle to each wheel
-        foreach (var wheel in _wheelArray)
-        {
-            //TODO: Func. call like this below OR Wheel class fetches data from this class?
-            // Also probably should be an interface to a concrete implementation. Same for the NaiveGroundControl below.
-            wheel.RotateWheels(steerAngle);
-        }
     }
 
     private float CalcForwardForce(float throttleInput)
@@ -200,32 +175,5 @@ public class CubeGroundControl : MonoBehaviour
 
         float turnRadius = 1 / (curvature * 100);
         return turnRadius;
-    }
-
-    private void NaiveGroundControl()
-    {
-        if (_controller.carState != CubeController.CarStates.AllWheelsSurface &&
-            _controller.carState != CubeController.CarStates.AllWheelsGround) return;
-
-        // Throttle
-        var throttleInput = Input.GetAxis("Vertical");
-        float Fx = throttleInput * GetForwardAcceleration(_controller.forwardSpeedAbs);
-        var forward = transform.forward;
-        _rb.AddForceAtPosition(Fx * forward, _rb.transform.TransformPoint(_rb.centerOfMass),
-            ForceMode.Acceleration);
-
-        // Auto dampening
-        _rb.AddForce(
-            forward * (5.25f * -Mathf.Sign(_controller.forwardSpeed) * (1 - Mathf.Abs(throttleInput))),
-            ForceMode.Acceleration);
-        // alternative auto dampening
-        //if (throttleInput == 0) _rb.AddForce(transform.forward * (5.25f * -Mathf.Sign(forwardSpeed)), ForceMode.Acceleration); 
-
-        // Steering
-        var up = transform.up;
-        _rb.AddTorque(up * (Input.GetAxis("Horizontal") * NaiveRotationForce), ForceMode.Acceleration);
-        _rb.AddTorque(up * (NaiveRotationDampeningForce * (1 - Mathf.Abs(Input.GetAxis("Horizontal"))) *
-                            transform.InverseTransformDirection(_rb.angularVelocity).y),
-            ForceMode.Acceleration);
     }
 }

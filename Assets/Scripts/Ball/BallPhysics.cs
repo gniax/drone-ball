@@ -6,7 +6,7 @@ public class BallPhysics : MonoBehaviour
 {
     public bool isFreeze = false;
     public float RandomSpeed = 10;
-    
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();

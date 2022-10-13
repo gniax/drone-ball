@@ -118,7 +118,8 @@ public class CameraController : MonoBehaviour
         bool grounded = carState == CubeController.CarStates.AllWheelsGround || carState == CubeController.CarStates.AllWheelsSurface;
         if (grounded)
         {
-            desiredPosition = _car.position + _car.up * cameraHeight;
+            desiredPosition = _car.position + Vector3.up * cameraHeight;
+            //desiredPosition = _car.position + _car.up * cameraHeight;
         }
         else
         {
