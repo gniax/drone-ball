@@ -1,30 +1,24 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class GroundTrigger : MonoBehaviour
+public class ShipGroundTrigger : MonoBehaviour
 {
     public bool isTouchingSurface = false;
 
     //Raycast options
-    float _rayLen, _rayOffset = 0f;
+    float _rayOffset = 0f;
     Vector3 _rayContactPoint, _rayContactNormal;
 
     bool _isColliderContact;
-    WheelSuspension _ws;
 
     Rigidbody _rb;
-
-    SuspensionCollider _sc;
 
     public int groundedTriggers = 0;
 
     private void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
-        _ws = GetComponentInParent<WheelSuspension>();
-        _sc = _ws.suspensionCollider.GetComponent<SuspensionCollider>();
         groundedTriggers = 0;
-        _rayLen = _ws.radius + _rayOffset;
     }
 
     private void FixedUpdate()
@@ -42,7 +36,7 @@ public class GroundTrigger : MonoBehaviour
 
     private void ApplyStickyForces(float stickyForce, Vector3 position, Vector3 dir)
     {
-        var force = stickyForce / 4 * dir;
+        var force = stickyForce * dir;
         _rb.AddForceAtPosition(force, position, ForceMode.Acceleration);
     }
 
@@ -50,13 +44,11 @@ public class GroundTrigger : MonoBehaviour
     {
         groundedTriggers++;
         _isColliderContact = true;
-        _sc.CalculateContactDepth(other);
     }
 
     public void TriggerStay(Collider other)
     {
         _isColliderContact = true;
-        _sc.CalculateContactDepth(other);
     }
 
     public void TriggerExit()
@@ -65,7 +57,6 @@ public class GroundTrigger : MonoBehaviour
         if (groundedTriggers <= 0)
         {
             _isColliderContact = false;
-            _sc.CalculateContactDepth(null);
         }
     }
 
@@ -84,7 +75,7 @@ public class GroundTrigger : MonoBehaviour
 
     public void DrawContactLines() // Draw vertical lines for ground contact for visual feedback
     {
-        _rayLen = transform.localScale.x / 2 + _rayOffset;
+        float _rayLen = transform.localScale.x / 2 + _rayOffset;
         var rayEndPoint = transform.position - (transform.up * _rayLen);
         Gizmos.color = Color.red;
 #if UNITY_EDITOR

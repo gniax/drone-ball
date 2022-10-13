@@ -88,32 +88,45 @@ namespace MatchController
             return car;
         }
 
-        public void SpawnOppositeCars(GameObject[] teamBlue, GameObject[] teamOrane)
+        public void SpawnOppositeCars(GameObject[] teamBlue, GameObject[] teamOrange)
         {
-            var blueTeamSize = teamBlue.Length;
-            var orangeTeamSize = teamOrane.Length;
-            var maxTeamSize = blueTeamSize > orangeTeamSize ? blueTeamSize : orangeTeamSize;
-            var spawnNum = _blueSpawnPositions.childCount;
+            int blueTeamSize = teamBlue.Length;
+            int orangeTeamSize = teamOrange.Length;
+            int maxTeamSize = Math.Max(blueTeamSize, orangeTeamSize);
+            int spawnNum = _blueSpawnPositions.childCount;
 
             var rnd = new System.Random();
-            var spawns = Enumerable.Range(0, spawnNum).ToList().OrderBy(x=>rnd.Next()).Take(maxTeamSize).ToList();
+            List<int> spawns = Enumerable.Range(0, spawnNum).ToList().OrderBy(x=>rnd.Next()).Take(maxTeamSize).ToList();
+            int lSpawnCount = spawns.Count;
 
             for (int i = 0; i < maxTeamSize; i++)
             {
-                if (teamBlue[i])
+                if (i >= lSpawnCount)
                 {
-                    teamBlue[i].transform.position = _blueSpawnPositions.GetChild(spawns[i]).position;
-                    teamBlue[i].transform.rotation = _blueSpawnPositions.GetChild(spawns[i]).rotation;
-                    teamBlue[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    teamBlue[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                    continue;
                 }
 
-                if (teamOrane[i])
+                if (i < blueTeamSize && teamBlue[i])
                 {
-                    teamOrane[i].transform.position = _orangeSpawnPositions.GetChild(spawns[i]).position;
-                    teamOrane[i].transform.rotation = _orangeSpawnPositions.GetChild(spawns[i]).rotation;
-                    teamOrane[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    teamOrane[i].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                    // horrible, il aurait fallu au prealable stocker dans un
+                    // Singleton les véhicules en jeu afin d'y accéder et au pire dans le awake faire le getComponent
+
+                    var lRigidbody = teamBlue[i].GetComponent<Rigidbody>();
+                    Transform lBlueSpawnPos = _blueSpawnPositions.GetChild(spawns[i]);
+                    teamBlue[i].transform.position = lBlueSpawnPos.position;
+                    teamBlue[i].transform.rotation = lBlueSpawnPos.rotation;
+                    lRigidbody.velocity = Vector3.zero;
+                    lRigidbody.angularVelocity = Vector3.zero;
+                }
+
+                if (i < orangeTeamSize && teamOrange[i])
+                {
+                    var lRigidbody = teamOrange[i].GetComponent<Rigidbody>();
+                    Transform lOrangeSpawnPos = _orangeSpawnPositions.GetChild(spawns[i]);
+                    teamOrange[i].transform.position = lOrangeSpawnPos.position;
+                    teamOrange[i].transform.rotation = lOrangeSpawnPos.rotation;
+                    lRigidbody.velocity = Vector3.zero;
+                    lRigidbody.angularVelocity = Vector3.zero;
                 }
             }
         }

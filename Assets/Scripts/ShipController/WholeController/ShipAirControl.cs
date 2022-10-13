@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(CubeController))]
-public class CubeAirControl : MonoBehaviour
+[RequireComponent(typeof(ShipController))]
+public class ShipAirControl : MonoBehaviour
 {
     public bool isUseDamperTorque = true;
     
     float _inputRoll = 0, _inputPitch = 0, _inputYaw = 0;
-    
+
+    ShipDodging _shipDodging;
     Rigidbody _rb;
     private Transform _cogLow;
     InputManager _inputManager;
-    CubeController _controller;
-    private CubeJumping _cubeJumping;
+    ShipController _controller;
     
     #region Torque Coefficients for rotation and drag
     const float Tr = 5.07956616966136f; // torque coefficient for roll
@@ -27,8 +27,7 @@ public class CubeAirControl : MonoBehaviour
         _rb = GetComponentInParent<Rigidbody>();
         _cogLow = transform.Find("cogLow");
         _inputManager = GetComponentInParent<InputManager>();
-        _controller = GetComponent<CubeController>();
-        _cubeJumping = GetComponent<CubeJumping>();
+        _controller = GetComponent<ShipController>();
     }
 
     void Update()
@@ -46,9 +45,9 @@ public class CubeAirControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_controller.numWheelsSurface >= 3) return;
+        if (_controller.numCornersSurface >= 3) return;
 
-        if (!_cubeJumping.isDodge || _cubeJumping.isCancelled)
+        if (!_shipDodging.isDodge || _shipDodging.isCancelled)
         {
             // pitch
             _rb.AddTorque(Tp * _inputPitch * -_cogLow.right, ForceMode.Impulse);
@@ -61,7 +60,7 @@ public class CubeAirControl : MonoBehaviour
             }
         }
 
-        if (!_cubeJumping.isDodge)
+        if (!_shipDodging.isDodge)
         {
             // roll
             _rb.AddTorque(Tr * _inputRoll * _cogLow.forward, ForceMode.Impulse);
