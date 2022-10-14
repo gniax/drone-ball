@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
         if (cInputManager.myInput != null && cInputManager.myInput.Action4.IsPressed)
         {
             source.Play();
-            Debug.Log("zaklzeajleaz");
+            //Debug.Log("zaklzeajleaz");
         }
         else
         {
