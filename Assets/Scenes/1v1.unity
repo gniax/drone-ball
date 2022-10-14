@@ -505,7 +505,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -22}
   m_SizeDelta: {x: 881.2, y: 41.135193}
   m_Pivot: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
 --- !u!1 &508314607
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +583,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
-=======
 --- !u!1001 &442866905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -676,7 +674,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2244980552165822263, guid: 257cd50d76b2e014b8660bdeca60fc72, type: 3}
   m_PrefabInstance: {fileID: 442866905}
   m_PrefabAsset: {fileID: 0}
->>>>>>> d3f2fb4f6c5635ff09f3cdf43cc30e545e03dc58
 --- !u!1 &610159610
 GameObject:
   m_ObjectHideFlags: 0
