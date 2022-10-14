@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(ShipController))]
 public class ShipBoosting : MonoBehaviour
@@ -9,20 +10,28 @@ public class ShipBoosting : MonoBehaviour
     private ShipController _c;
     private CustomInputManager _inputManager;
     private Rigidbody _rb;
-    private GUIStyle _style;
-    
+    //private GUIStyle _style;
+
+    public TextMeshProUGUI boostTextValue;
     public bool isBoosting;
     public bool infiniteBoosting;
     public bool disableBoosting;
-    public float boostForceMultiplier = 1f;
-    public float boostAmount = 32f;
+    public float boostForceMultiplier = 2f;
+    public float boostAmount = 100f;
 
     private void Start()
     {
+        /*
         _style = new GUIStyle();
         _style.normal.textColor = Color.red;
         _style.fontSize = 25;
         _style.fontStyle = FontStyle.Bold;
+        */
+
+        if (boostTextValue)
+        {
+            boostTextValue.text = ((int)boostAmount).ToString();
+        }
 
         if (infiniteBoosting)
         {
@@ -37,6 +46,25 @@ public class ShipBoosting : MonoBehaviour
         if (Resources.FindObjectsOfTypeAll<ShipParticleSystem>()[0] != null)
         {
             Resources.FindObjectsOfTypeAll<ShipParticleSystem>()[0].gameObject.SetActive(true);
+        }
+
+        InvokeRepeating("UpdateBoostValue", 1f, 1f);
+    }
+
+    private void UpdateBoostValue()
+    {
+        if (!isBoosting)
+        {
+            boostAmount += 15f;
+            if (boostAmount > 100)
+            {
+                boostAmount = 100;
+            }
+        }
+
+        if (boostTextValue)
+        {
+            boostTextValue.text = ((int)boostAmount).ToString();
         }
     }
 
@@ -63,6 +91,10 @@ public class ShipBoosting : MonoBehaviour
                 if (!infiniteBoosting)
                 {
                     boostAmount = Mathf.Max(0.0f, boostAmount - 0.27f);
+                    if (boostTextValue)
+                    {
+                        boostTextValue.text = ((int)boostAmount).ToString();
+                    }
                 }
             }
             else
@@ -94,8 +126,8 @@ public class ShipBoosting : MonoBehaviour
         return false;
     }
 
-    void OnGUI()
+    /*void OnGUI()
     {
         GUI.Label(new Rect(Screen.width - 140, Screen.height - 50, 150, 130), $"Boost {(int)boostAmount}", _style);
-    }
+    }*/
 }

@@ -1,30 +1,36 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(CubeController))]
 public class CubeBoosting : MonoBehaviour
 {
+
+
     private const float BoostForce = 991.666f / 100f;
     
     private int _boostCountdown = 13;
     private CubeController _c;
     private CustomInputManager _inputManager;
     private Rigidbody _rb;
-    private GUIStyle _style;
-    
+    //private GUIStyle _style;
+
     public bool isBoosting;
     public bool infiniteBoosting;
     public bool disableBoosting;
     public float boostForceMultiplier = 1f;
     public float boostAmount = 32f;
 
+    private float _boostTimer = 0;
 
 
     private void Start()
     {
+        /*
         _style = new GUIStyle();
         _style.normal.textColor = Color.red;
         _style.fontSize = 25;
         _style.fontStyle = FontStyle.Bold;
+        */
 
         if (infiniteBoosting)
         {
@@ -38,7 +44,9 @@ public class CubeBoosting : MonoBehaviour
         // Activate ParticleSystems GameObject
         if (Resources.FindObjectsOfTypeAll<CubeParticleSystem>()[0] != null)
             Resources.FindObjectsOfTypeAll<CubeParticleSystem>()[0].gameObject.SetActive(true);
+
     }
+
 
     void FixedUpdate()
     {
@@ -92,9 +100,10 @@ public class CubeBoosting : MonoBehaviour
         boostAmount = Mathf.Min(100f, boostAmount + boost);
         return false;
     }
-
+    /*
     void OnGUI()
     {
         GUI.Label(new Rect(Screen.width - 140, Screen.height - 50, 150, 130), $"Boost {(int)boostAmount}", _style);
     }
+    */
 }
