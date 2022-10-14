@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private CustomInputManager cInputManager;
+    public CustomInputManager cInputManager;
+    public AudioSource source;
+    [SerializeField]
+    public AudioClip boost;
+
+
+    public void Start()
+    {
+        cInputManager = this.GetComponent<CustomInputManager>();
+        source = this.GetComponent<AudioSource>();
+    }
+
 
     private void Update()
     {
@@ -13,9 +24,15 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (cInputManager.isBoost == true)
+        if (cInputManager.myInput != null && cInputManager.myInput.Action4.IsPressed)
         {
-            // todo: le son
+            source.Play();
+            Debug.Log("zaklzeajleaz");
+        }
+        else
+        {
+            if (source.isPlaying)
+            source.Stop();
         }
     }
 

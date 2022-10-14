@@ -48,12 +48,12 @@ namespace MatchController
                 ResetGameState();
                 manageEndGame();
             }
-            /*
-            if(_mapData.isScoredBlue || _mapData.isScoredOrange)
+
+            if (_mapData.isScoredBlue || _mapData.isScoredOrange)
             {
                 HandleScoreEvent();
             }
-            */
+
         }
 
         IEnumerator startTimer()
@@ -114,26 +114,22 @@ namespace MatchController
             _matchTimeController.paused = false;
         }
 
-        /*
+        
         private void HandleScoreEvent()
         {
             ResetGameState();
-            if (_matchTimeController.Overtime)
-            {
-                _matchTimeController.EndOvertime();
-            }
         }
-        */
+        
 
-        /*
-        private void OnGUI()
-        {
-            if (_matchTimeController.HasEnded())
-            {
-                GUI.Label(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 75, 150, 130), "GAME OVER", _style);
-            }
-        }
-        */
+        
+        //private void OnGUI()
+        //{
+        //    if (_matchTimeController.HasEnded())
+        //    {
+        //        GUI.Label(new Rect(Screen.width / 2 - 75, Screen.height / 2 - 75, 150, 130), "GAME OVER", _style);
+        //    }
+        //}
+        
 
         public void HandleDemolition(GameObject demolishedCar)
         {

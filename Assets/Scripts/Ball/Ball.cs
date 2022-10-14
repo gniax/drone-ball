@@ -154,10 +154,17 @@ public class Ball : Resettable
 
     private void PerformPlayerHit(Collision col)
     {
+
         if (!disableBulletImpulse)
         {
             CancelUnityImpulse();
-            col.gameObject.GetComponent<Resettable>().CancelUnityImpulse();
+            var a = col.gameObject.GetComponent<Resettable>();
+            if (a == null)
+            { 
+                return;
+            }
+
+            a.CancelUnityImpulse();
             //setCarState(col.rigidbody);
             Vector3 collisionPoint = col.rigidbody.ClosestPointOnBounds(rb.position); // col.GetContact(0).point;
             Nullable<Vector3> jBulletResult = -CustomPhysics.CalculateBulletImpulse(rb, col.rigidbody, collisionPoint);
