@@ -9,7 +9,7 @@ public class ShipGroundControl : MonoBehaviour
 
     private Rigidbody _rb;
     private ShipController _controller;
-    private InputManager _inputManager;
+    private CustomInputManager _inputManager;
     private ShipCollision _shipCollision;
 
     public bool disableGroundStabilization;
@@ -27,7 +27,7 @@ public class ShipGroundControl : MonoBehaviour
     {
         _rb = GetComponentInParent<Rigidbody>();
         _controller = GetComponent<ShipController>();
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _shipCollision = GetComponentInParent<ShipCollision>();
     }
 

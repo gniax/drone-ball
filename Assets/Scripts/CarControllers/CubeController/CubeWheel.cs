@@ -25,7 +25,7 @@ public class CubeWheel : MonoBehaviour
     Rigidbody _rb;
     CubeController _c;
     CubeGroundControl _groundControl;
-    InputManager _inputManager;
+    CustomInputManager _inputManager;
 
     float _wheelRadius, _wheelForwardVelocity, _wheelLateralVelocity;
     Vector3 _wheelVelocity, _lastWheelVelocity, _wheelAcceleration, _wheelContactPoint, _lateralForcePosition = Vector3.zero;
@@ -46,7 +46,7 @@ public class CubeWheel : MonoBehaviour
         _steeringCurve = wheels.SteeringCurve;
         _rb = GetComponentInParent<Rigidbody>();
         _c = GetComponentInParent<CubeController>();
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _groundControl= GetComponentInParent<CubeGroundControl>();
         _wheelRadius = GetComponentInParent<WheelSuspension>().radius;
     }

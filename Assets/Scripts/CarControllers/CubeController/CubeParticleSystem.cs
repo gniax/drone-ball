@@ -9,7 +9,7 @@ public class CubeParticleSystem : MonoBehaviour
     public GameObject firePs;
 
     const int SupersonicThreshold = 2200 / 100;
-    InputManager _inputManager;
+    CustomInputManager _inputManager;
     CubeController _cubeController;
     CubeBoosting _cubeBoosting;
     private TrailRenderer[] _trails;
@@ -19,7 +19,7 @@ public class CubeParticleSystem : MonoBehaviour
     {
         _cubeController = GetComponentInParent<CubeController>();
         _cubeBoosting = GetComponentInParent<CubeBoosting>();
-        _inputManager = transform.parent.GetComponentInParent<InputManager>();
+        _inputManager = transform.parent.GetComponentInParent<CustomInputManager>();
         _trails = GetComponentsInChildren<TrailRenderer>();
         _trails[0].time = _trails[1].time = 0;
         firePs.SetActive(false);

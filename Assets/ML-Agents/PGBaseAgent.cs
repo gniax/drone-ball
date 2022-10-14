@@ -20,7 +20,7 @@ public abstract class PGBaseAgent : Agent
     /// </summary>
     private ActionSpaceType _actionSpaceType;
 
-    public InputManager InputManager;
+    public CustomInputManager InputManager;
 
     protected ShipController controller;
     protected ShipBoosting boostControl;
@@ -34,7 +34,7 @@ public abstract class PGBaseAgent : Agent
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        InputManager = GetComponent<InputManager>();
+        InputManager = GetComponent<CustomInputManager>();
         InputManager.isAgent = true;
 
         ActionSpec actionSpec = GetComponent<BehaviorParameters>().BrainParameters.ActionSpec;

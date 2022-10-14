@@ -17,7 +17,7 @@ public class ShipDodging : MonoBehaviour
     private float _yaw = 0.0f;
     private float _unflipStart;
     private Rigidbody _rb;
-    private InputManager _inputManager;
+    private CustomInputManager _inputManager;
     private ShipController _controller;
     private Transform _cogLow;
 
@@ -31,7 +31,7 @@ public class ShipDodging : MonoBehaviour
     void Start()
     {
         _rb = GetComponentInParent<Rigidbody>();
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _controller = GetComponent<ShipController>();
         _cogLow = transform.Find("cogLow");
     }

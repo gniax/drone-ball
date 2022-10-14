@@ -7,7 +7,7 @@ public class ShipBoosting : MonoBehaviour
     
     private int _boostCountdown = 13;
     private ShipController _c;
-    private InputManager _inputManager;
+    private CustomInputManager _inputManager;
     private Rigidbody _rb;
     private GUIStyle _style;
     
@@ -29,7 +29,7 @@ public class ShipBoosting : MonoBehaviour
             boostAmount = 100f;
         }
 
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _c = GetComponent<ShipController>();
         _rb = GetComponentInParent<Rigidbody>();
 

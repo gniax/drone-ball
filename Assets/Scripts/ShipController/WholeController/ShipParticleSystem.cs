@@ -9,7 +9,7 @@ public class ShipParticleSystem : MonoBehaviour
     public GameObject firePs;
 
     const int SupersonicThreshold = 2200 / 100;
-    InputManager _inputManager;
+    CustomInputManager _inputManager;
     ShipController _shipController;
     ShipBoosting _shipBoosting;
     private TrailRenderer[] _trails;
@@ -19,7 +19,7 @@ public class ShipParticleSystem : MonoBehaviour
     {
         _shipController = GetComponentInParent<ShipController>();
         _shipBoosting = GetComponentInParent<ShipBoosting>();
-        _inputManager = transform.parent.GetComponentInParent<InputManager>();
+        _inputManager = transform.parent.GetComponentInParent<CustomInputManager>();
         _trails = GetComponentsInChildren<TrailRenderer>();
         _trails[0].time = _trails[1].time = 0;
         firePs.SetActive(false);

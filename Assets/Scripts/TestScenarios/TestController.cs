@@ -22,7 +22,7 @@ namespace TestScenarios
         private bool _isFirstUpdate = true;
 
         private List<GameObject> _controllableCars = new List<GameObject>();
-        private Dictionary<GameObject, InputManager> _dictCarInput = new Dictionary<GameObject, InputManager>();
+        private Dictionary<GameObject, CustomInputManager> _dictCarInput = new Dictionary<GameObject, CustomInputManager>();
         private Dictionary<GameObject, List<Action>> _dictCarAction = new Dictionary<GameObject, List<Action>>();
         private Dictionary<GameObject, float> _dictCarNextActionTime = new Dictionary<GameObject, float>();
 
@@ -62,7 +62,7 @@ namespace TestScenarios
                     controllableCar.SetActive(true);
                     controllableCar.GetComponentInChildren<CubeBoosting>().SetInfiniteBoost(true);
                     _controllableCars.Add(controllableCar);
-                    _dictCarInput.Add(controllableCar, controllableCar.GetComponent<InputManager>());
+                    _dictCarInput.Add(controllableCar, controllableCar.GetComponent<CustomInputManager>());
                     _dictCarAction.Add(controllableCar, gov.actions);
                     _dictCarNextActionTime.Add(controllableCar, -1.0f);
                     Rigidbody carRb = controllableCar.GetComponent<Rigidbody>();
@@ -122,7 +122,7 @@ namespace TestScenarios
             rigidBody.angularVelocity = startValues.angularVelocity.ToVector();
         }
 
-        private void ApplyActionOnCar(InputManager inputManager, Action nextAction)
+        private void ApplyActionOnCar(CustomInputManager inputManager, Action nextAction)
         {
             if (nextAction == null) return;
             var inputs = nextAction.inputs;
@@ -130,7 +130,7 @@ namespace TestScenarios
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
-        private void ApplyInput(InputManager inputManager, Input input)
+        private void ApplyInput(CustomInputManager inputManager, Input input)
         {
             switch (input.name)
             {
@@ -224,7 +224,7 @@ namespace TestScenarios
             _logger?.Log();
         }
 
-        private void ResetActionCar(InputManager inputManager)
+        private void ResetActionCar(CustomInputManager inputManager)
         {
             inputManager.isJump = false;
             inputManager.isBoost = false;

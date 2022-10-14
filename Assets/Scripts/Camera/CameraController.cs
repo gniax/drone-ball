@@ -23,9 +23,9 @@ public class CameraController : MonoBehaviour
     float _tmpRotationX = 0f;
     float _tmpRotationY = 0f;
 
-    Transform _ball, _car;
-    List<Transform> _allCars = new List<Transform>();
-    int _actualCarIndex = 0;
+    Transform _ball;
+    public ShipController ShipController;
+
 
     Vector3 _checkVelocity;
     Vector3 _prevPosistion;
@@ -36,35 +36,21 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         _ball = transform.parent.Find("Ball");
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            Transform childOfParent = transform.parent.GetChild(i);
-            if (childOfParent.tag == "ControllableCar")
-            {
-                _allCars.Add(childOfParent);
-            }
-        }
-        _car = _allCars[_actualCarIndex];
-        _pivotPosition = _car.position + Vector3.up * cameraHeight;
+        _pivotPosition = ShipController.transform.position + Vector3.up * cameraHeight;
         _checkVelocity = Vector3.zero;
-        _prevPosistion = _car.position;
+        _prevPosistion = ShipController.transform.position;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Y"))
             _isBallCam = !_isBallCam;
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _actualCarIndex = (++_actualCarIndex) % _allCars.Count;
-            _car = _allCars[_actualCarIndex];
-        }
     }
 
     private void FixedUpdate()
     {
-        _checkVelocity = (_car.position - _prevPosistion) / Time.deltaTime;
-        _prevPosistion = _car.position;
+        _checkVelocity = (ShipController.transform.position - _prevPosistion) / Time.deltaTime;
+        _prevPosistion = ShipController.transform.position;
         //Debug.Log("X: " + _checkVelocity.x + "Y: " + _checkVelocity.y + "Z: " + _checkVelocity.z);
         UpdatePivotElement(stiffnessPosition);
         UpdateCamDirection(stiffnessAngle);
@@ -112,15 +98,15 @@ public class CameraController : MonoBehaviour
     void UpdatePivotElement(float stiffnessPos)
     {
         Vector3 desiredPosition;
-        ShipController.ShipStates carState = _car.GetComponentInChildren<ShipController>().shipState;
-        bool grounded = carState == ShipController.ShipStates.AllCornersSurface || carState == ShipController.ShipStates.SomeCornersSurface;
+        ShipController.ShipStates carState = ShipController.GetComponentInChildren<ShipController>().shipState;
+        bool grounded = carState == global::ShipController.ShipStates.AllCornersSurface || carState == global::ShipController.ShipStates.SomeCornersSurface;
         if (grounded)
         {
-            desiredPosition = _car.position + _car.up * cameraHeight;
+            desiredPosition = ShipController.transform.position + ShipController.transform.up * cameraHeight;
         }
         else
         {
-            desiredPosition = _car.position + Vector3.up * cameraHeight;
+            desiredPosition = ShipController.transform.position + Vector3.up * cameraHeight;
         }
         _pivotPosition = Vector3.Lerp(_pivotPosition, desiredPosition, stiffnessPos * Time.deltaTime);
     }
@@ -128,21 +114,21 @@ public class CameraController : MonoBehaviour
     void UpdateCamPositon(float stiffnessPos)
     {
         Vector3 desiredPosition;
-        ShipController.ShipStates carState = _car.GetComponentInChildren<ShipController>().shipState;
-        bool grounded = carState == ShipController.ShipStates.AllCornersSurface || carState == ShipController.ShipStates.SomeCornersSurface;
+        ShipController.ShipStates carState = ShipController.GetComponentInChildren<ShipController>().shipState;
+        bool grounded = carState == global::ShipController.ShipStates.AllCornersSurface || carState == global::ShipController.ShipStates.SomeCornersSurface;
         if (_isBallCam)
         {
-            desiredPosition = _pivotPosition + (_car.position - _ball.position).normalized * cameraDist;
+            desiredPosition = _pivotPosition + (ShipController.transform.position - _ball.position).normalized * cameraDist;
         }
         else
         {
             if (grounded)
             {
-                desiredPosition = _pivotPosition - _car.forward * cameraDist;
+                desiredPosition = _pivotPosition - ShipController.transform.forward * cameraDist;
             }
             else
             {
-                desiredPosition = _pivotPosition - _car.GetComponent<Rigidbody>().velocity.normalized * cameraDist;
+                desiredPosition = _pivotPosition - ShipController.GetComponent<Rigidbody>().velocity.normalized * cameraDist;
             }
         }
         desiredPosition = AddRotation(desiredPosition);

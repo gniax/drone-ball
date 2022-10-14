@@ -9,7 +9,7 @@ public class CubeAirControl : MonoBehaviour
     
     Rigidbody _rb;
     private Transform _cogLow;
-    InputManager _inputManager;
+    CustomInputManager _inputManager;
     CubeController _controller;
     private CubeJumping _cubeJumping;
     
@@ -26,7 +26,7 @@ public class CubeAirControl : MonoBehaviour
     {
         _rb = GetComponentInParent<Rigidbody>();
         _cogLow = transform.Find("cogLow");
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _controller = GetComponent<CubeController>();
         _cubeJumping = GetComponent<CubeJumping>();
     }

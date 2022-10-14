@@ -31,7 +31,7 @@ public class OneVsOneAgentTest : Agent
     private CubeGroundControl _groundControl;
     private CubeAirControl _airControl;
 
-    public InputManager InputManager;
+    public CustomInputManager InputManager;
 
     private readonly float[] DISCRETE_ACTIONS = { -1f, -0.5f, 0f, 0.5f, 1f };
     private ActionSpaceType _actionSpaceType;
@@ -43,7 +43,7 @@ public class OneVsOneAgentTest : Agent
 
         _matchEnvController = transform.parent.GetComponent<MatchEnvControllerTest>();
 
-        InputManager = GetComponent<InputManager>();
+        InputManager = GetComponent<CustomInputManager>();
         InputManager.isAgent = true;
 
         _teamController = GetComponentInParent<TeamController>();

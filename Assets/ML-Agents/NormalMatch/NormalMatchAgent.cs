@@ -24,12 +24,12 @@ public class NormalMatchAgent: Agent
 
     private MapData _mapData;
 
-    public InputManager InputManager;
+    public CustomInputManager InputManager;
 
 
     void Start()
     {
-        InputManager = GetComponent<InputManager>();
+        InputManager = GetComponent<CustomInputManager>();
         InputManager.isAgent = true;
 
         _rb = GetComponent<Rigidbody>();

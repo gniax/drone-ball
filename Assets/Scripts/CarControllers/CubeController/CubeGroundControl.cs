@@ -9,7 +9,7 @@ public class CubeGroundControl : MonoBehaviour
 
     private Rigidbody _rb;
     private CubeController _controller;
-    private InputManager _inputManager;
+    private CustomInputManager _inputManager;
     private CubeWheel[] _wheelArray;
     private CarCollision _carCollision;
 
@@ -26,7 +26,7 @@ public class CubeGroundControl : MonoBehaviour
         _rb = GetComponentInParent<Rigidbody>();
         _controller = GetComponent<CubeController>();
         _wheelArray = GetComponentsInChildren<CubeWheel>();
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _carCollision = GetComponentInParent<CarCollision>();
     }
 

@@ -10,7 +10,7 @@ public class ShipAirControl : MonoBehaviour
     ShipDodging _shipDodging;
     Rigidbody _rb;
     private Transform _cogLow;
-    InputManager _inputManager;
+    CustomInputManager _inputManager;
     ShipController _controller;
     
     #region Torque Coefficients for rotation and drag
@@ -26,7 +26,7 @@ public class ShipAirControl : MonoBehaviour
     {
         _rb = GetComponentInParent<Rigidbody>();
         _cogLow = transform.Find("cogLow");
-        _inputManager = GetComponentInParent<InputManager>();
+        _inputManager = GetComponentInParent<CustomInputManager>();
         _controller = GetComponent<ShipController>();
         _shipDodging = GetComponent<ShipDodging>();
     }

@@ -30,7 +30,7 @@ public class Rounding : MonoBehaviour
     {
         ball = FindObjectOfType<Ball>().gameObject.GetComponent<Rigidbody>();
         List<Rigidbody> carlist = new List<Rigidbody>();
-        foreach(InputManager car in FindObjectsOfType<InputManager>())
+        foreach(CustomInputManager car in FindObjectsOfType<CustomInputManager>())
         {
             carlist.Add(car.gameObject.GetComponent<Rigidbody>());
         }

@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(CustomInputManager))]
 public class GameManager : MonoBehaviour
 {
-    public static InputManager InputManager;
+    public static CustomInputManager InputManager;
     public static AudioManager AudioManager;
     
     void Awake()
     {
-        InputManager = GetComponent<InputManager>();
+        InputManager = GetComponent<CustomInputManager>();
         AudioManager = GetComponent<AudioManager>();
         //DontDestroyOnLoad(gameObject);
     }
