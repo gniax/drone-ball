@@ -24,8 +24,8 @@ public class InputManager : MonoBehaviour
             isJumpUp = Input.GetMouseButtonUp(1) || Input.GetButtonUp("A");
             isJumpDown = Input.GetMouseButtonDown(1) || Input.GetButtonDown("A");
 
-            isBoost = Input.GetButton("RB") || Input.GetMouseButton(0);
-            isDrift = Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift);
+            isBoost = Input.GetButton("X");
+            isDrift = Input.GetButton("A") || Input.GetKey(KeyCode.LeftShift);
             isAirRoll = Input.GetButton("LB") || Input.GetKey(KeyCode.LeftShift);
         }
     }
@@ -33,9 +33,9 @@ public class InputManager : MonoBehaviour
     private static float GetRollInput()
     {
         var inputRoll = 0;
-        if (Input.GetKey(KeyCode.E) || Input.GetButton("B"))
+        if (Input.GetKey(KeyCode.E))
             inputRoll = -1;
-        else if (Input.GetKey(KeyCode.Q) || Input.GetButton("Y"))
+        else if (Input.GetKey(KeyCode.Q))
             inputRoll = 1;
 
         return inputRoll;
@@ -44,10 +44,10 @@ public class InputManager : MonoBehaviour
     static float GetThrottle()
     {
         float throttle = 0;
-        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("RT") > 0)
-            throttle = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("RT"));
-        else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("LT") < 0)
-            throttle = Mathf.Min(Input.GetAxis("Vertical"), Input.GetAxis("LT"));
+        if (Input.GetAxis("Vertical") > 0 || Input.GetAxis("L2") > 0)
+            throttle = Mathf.Max(Input.GetAxis("Vertical"), Input.GetAxis("L2")) * -1;
+        else if (Input.GetAxis("Vertical") < 0 || Input.GetAxis("R2") < 0)
+            throttle = Mathf.Min(Input.GetAxis("Vertical"), Input.GetAxis("R2")) * -1;
 
         return throttle;
     }

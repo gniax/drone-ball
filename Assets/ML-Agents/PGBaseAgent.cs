@@ -22,11 +22,10 @@ public abstract class PGBaseAgent : Agent
 
     public InputManager InputManager;
 
-    protected CubeJumping jumpControl;
-    protected CubeController controller;
-    protected CubeBoosting boostControl;
-    protected CubeGroundControl groundControl;
-    protected CubeAirControl airControl;
+    protected ShipController controller;
+    protected ShipBoosting boostControl;
+    protected ShipGroundControl groundControl;
+    protected ShipAirControl airControl;
     protected Rigidbody rb;
     protected MapData mapData;
 
@@ -42,11 +41,10 @@ public abstract class PGBaseAgent : Agent
         _actionSpaceType = DetermineActionSpaceType(actionSpec);
 
         rb = GetComponent<Rigidbody>();
-        airControl = GetComponentInChildren<CubeAirControl>();
-        jumpControl = GetComponentInChildren<CubeJumping>();
-        controller = GetComponentInChildren<CubeController>();
-        boostControl = GetComponentInChildren<CubeBoosting>();
-        groundControl = GetComponentInChildren<CubeGroundControl>();
+        airControl = GetComponentInChildren<ShipAirControl>();
+        controller = GetComponentInChildren<ShipController>();
+        boostControl = GetComponentInChildren<ShipBoosting>();
+        groundControl = GetComponentInChildren<ShipGroundControl>();
 
         mapData = transform.parent.Find("World").Find("Rocket_Map").GetComponent<MapData>();
     }

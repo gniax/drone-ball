@@ -34,10 +34,13 @@ public class ShipGroundControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //ApplyStabilizationFloor();
-        //ApplyStabilizationWall();
+        ApplyStabilizationFloor();
+        ApplyStabilizationWall();
+        //float isForwarding = Input.GetAxis("R2") == -1 ? 1f : 0f;
+        //isForwarding += Input.GetAxis("L2") == 1 ? -1f : 0f;
+
+        //Debug.LogError(_inputManager.throttleInput);
         var forwardAcceleration = CalcForwardForce(_inputManager.throttleInput);
-        //ApplyWheelForwardForce(forwardAcceleration);
         if (Mathf.Abs(_inputManager.throttleInput) >= 0.0001f) 
         {
             ApplyForwardForce(forwardAcceleration);
@@ -48,7 +51,7 @@ public class ShipGroundControl : MonoBehaviour
         _roll = _inputManager.rollInput;
 
         Quaternion target = Quaternion.Euler(_pitch, _yaw, _roll);
-        transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, target, Time.deltaTime * 2.0f );
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, Time.deltaTime * 2.0f );
 
     }
 

@@ -15,7 +15,7 @@ public class MatchTimeController : MonoBehaviour
 
     private GUIStyle _style;
 
-    void Start()
+    void Awake()
     {
         MatchTimer = matchTimeSeconds;
         /*
@@ -56,7 +56,7 @@ public class MatchTimeController : MonoBehaviour
 
     public bool HasEnded()
     {
-        return !paused && MatchTimer <= .0f;// && !Overtime;
+        return paused == false && MatchTimer <= .0f;// && !Overtime;
     }
 
     public void ActivateOvertime()

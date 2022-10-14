@@ -30,17 +30,6 @@ namespace MatchController
             _matchTimeController.enabled = false;
             // Début de partie 
             StartCoroutine(startTimer());
-
-
-            /*
-            _style = new GUIStyle
-            {
-                normal = {textColor = new Color(1f, 0.25f, 0.15f)},
-                fontSize = 25,
-                fontStyle = FontStyle.Bold,
-                alignment = TextAnchor.UpperCenter
-            };
-            */
         }
 
         void Update()
@@ -52,18 +41,11 @@ namespace MatchController
                 _teamController.Initialize();
             }
 
-            /*
-            if (_matchTimeController.MatchTimer < 1.0f && !_matchTimeController.Overtime)
-            {
-                if (_b != null)
-                _matchTimeController.paused = !_b.isTouchedGround;
-            }
-            */
 
-            if (_matchTimeController.HasEnded()) // && _mapData.blueScore == _mapData.orangeScore
+            if (_matchTimeController.enabled && _matchTimeController.HasEnded()) // && _mapData.blueScore == _mapData.orangeScore
             {
-                // _matchTimeController.ActivateOvertime();
-                // ResetGameState();
+                _matchTimeController.ActivateOvertime();
+                ResetGameState();
                 manageEndGame();
             }
             /*
@@ -93,10 +75,12 @@ namespace MatchController
 
         private void manageEndGame()
         {
-            if (!_matchTimeController || _matchTimeController.enabled == false)
+            if (!_matchTimeController || _matchTimeController.enabled == false || _hasStarted != true )
             {
                 return;
             }
+
+
 
             if(_mapData.blueScore == _mapData.orangeScore)
             {

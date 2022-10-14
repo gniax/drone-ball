@@ -25,8 +25,6 @@ public class CameraController : MonoBehaviour
 
     Transform _ball, _car;
     List<Transform> _allCars = new List<Transform>();
-
-    [SerializeField]
     int _actualCarIndex = 0;
 
     Vector3 _checkVelocity;
@@ -38,7 +36,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         _ball = transform.parent.Find("Ball");
-        for(int i = 0; i < transform.parent.childCount; i++)
+        for (int i = 0; i < transform.parent.childCount; i++)
         {
             Transform childOfParent = transform.parent.GetChild(i);
             if (childOfParent.tag == "ControllableCar")
@@ -54,7 +52,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("X"))
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Y"))
             _isBallCam = !_isBallCam;
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -65,11 +63,8 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_car != null)
-        {
-            _checkVelocity = (_car.position - _prevPosistion) / Time.deltaTime;
-            _prevPosistion = _car.position;
-        }
+        _checkVelocity = (_car.position - _prevPosistion) / Time.deltaTime;
+        _prevPosistion = _car.position;
         //Debug.Log("X: " + _checkVelocity.x + "Y: " + _checkVelocity.y + "Z: " + _checkVelocity.z);
         UpdatePivotElement(stiffnessPosition);
         UpdateCamDirection(stiffnessAngle);
@@ -97,9 +92,9 @@ public class CameraController : MonoBehaviour
         float minimumY = -10;
         float maximumY = 60F;
 
-        _tmpRotationX += Input.GetAxis("Camera X") * sensitivityX * (Time.deltaTime/_rotationUpdateTime);
+        _tmpRotationX += Input.GetAxis("Camera X") * sensitivityX * (Time.deltaTime / _rotationUpdateTime);
         _tmpRotationX = Mathf.Clamp(_tmpRotationX, minimumX, maximumX);
-        _tmpRotationY += Input.GetAxis("Camera Y") * sensitivityY * (Time.deltaTime/_rotationUpdateTime);
+        _tmpRotationY += Input.GetAxis("Camera Y") * sensitivityY * (Time.deltaTime / _rotationUpdateTime);
         _tmpRotationY = Mathf.Clamp(_tmpRotationY, minimumY, maximumY);
 
         if (Time.time - _lastRotationUpdate >= _rotationUpdateTime)
@@ -117,26 +112,11 @@ public class CameraController : MonoBehaviour
     void UpdatePivotElement(float stiffnessPos)
     {
         Vector3 desiredPosition;
-
-        bool grounded;
-        CubeController lCubeC = _car.GetComponentInChildren<CubeController>();
-        if (lCubeC != null)
-        {
-            grounded = lCubeC.carState == CubeController.CarStates.AllWheelsGround
-                    || lCubeC.carState == CubeController.CarStates.AllWheelsSurface;
-        }
-        else
-        {
-            ShipController lShipC = _car.GetComponentInChildren<ShipController>();
-            grounded = lShipC.shipState == ShipController.ShipStates.Ground
-                    || lShipC.shipState == ShipController.ShipStates.AllCornersSurface;
-        }
-
+        ShipController.ShipStates carState = _car.GetComponentInChildren<ShipController>().shipState;
+        bool grounded = carState == ShipController.ShipStates.AllCornersSurface || carState == ShipController.ShipStates.SomeCornersSurface;
         if (grounded)
         {
-            Debug.LogError("azeez");
-            desiredPosition = _car.position + Vector3.up * cameraHeight;
-            //desiredPosition = _car.position + _car.up * cameraHeight;
+            desiredPosition = _car.position + _car.up * cameraHeight;
         }
         else
         {
@@ -148,21 +128,8 @@ public class CameraController : MonoBehaviour
     void UpdateCamPositon(float stiffnessPos)
     {
         Vector3 desiredPosition;
-
-        bool grounded;
-        CubeController lCubeC = _car.GetComponentInChildren<CubeController>();
-        if (lCubeC != null)
-        {
-            grounded = lCubeC.carState == CubeController.CarStates.AllWheelsGround
-                    || lCubeC.carState == CubeController.CarStates.AllWheelsSurface;
-        }
-        else
-        {
-            ShipController lShipC = _car.GetComponentInChildren<ShipController>();
-            grounded = lShipC.shipState == ShipController.ShipStates.Ground
-                    || lShipC.shipState == ShipController.ShipStates.AllCornersSurface;
-        }
-
+        ShipController.ShipStates carState = _car.GetComponentInChildren<ShipController>().shipState;
+        bool grounded = carState == ShipController.ShipStates.AllCornersSurface || carState == ShipController.ShipStates.SomeCornersSurface;
         if (_isBallCam)
         {
             desiredPosition = _pivotPosition + (_car.position - _ball.position).normalized * cameraDist;
@@ -185,7 +152,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if (Mathf.Abs(_checkVelocity.x) <3f && Mathf.Abs(_checkVelocity.z) < 3f)
+            if (Mathf.Abs(_checkVelocity.x) < 3f && Mathf.Abs(_checkVelocity.z) < 3f)
             {
                 transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.01f * stiffnessPos * Time.deltaTime);
             }

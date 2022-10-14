@@ -55,7 +55,7 @@ public class TopScorerAgent : PGBaseAgent
     private void OnEpisodeBeginDifficulty0()
     {
         Vector3 startPosition = _midFieldPosition + new Vector3(30f, 0.17f, 0f);
-        controller.ResetCar(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
+        controller.ResetShip(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
 
         _ball.localPosition = new Vector3(45f, 0.9315f, UnityEngine.Random.Range(-5f, 5f));
         rbBall.velocity = Vector3.zero;
@@ -67,7 +67,7 @@ public class TopScorerAgent : PGBaseAgent
         // Reset Car
         Vector3 startPosition = _midFieldPosition + new Vector3(25f, 0.17f, UnityEngine.Random.Range(-5f, 5f));
 
-        controller.ResetCar(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
+        controller.ResetShip(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
 
         //Reset Ball
         _ball.localPosition = new Vector3(45f, 0.93f, UnityEngine.Random.Range(1, 10) % 2 == 0 ? -7f : 7f);
@@ -84,7 +84,7 @@ public class TopScorerAgent : PGBaseAgent
     private void OnEpisodeBeginDifficulty2()
     {
         Vector3 startPosition = _midFieldPosition + new Vector3(25f, 0.17f, UnityEngine.Random.Range(-15f, 15f));
-        controller.ResetCar(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
+        controller.ResetShip(startPosition, Quaternion.Euler(0f, 90f, 0f), 100f);
 
 
         //Reset Ball
@@ -106,7 +106,7 @@ public class TopScorerAgent : PGBaseAgent
         //Reset Car
         Vector3 startPosition = _midFieldPosition + new Vector3(0f, 0.17f, UnityEngine.Random.Range(-15f, 15f));
 
-        controller.ResetCar(startPosition, Quaternion.Euler(0f, 90f + UnityEngine.Random.Range(-20f, 20f), 0f), 100f);
+        controller.ResetShip(startPosition, Quaternion.Euler(0f, 90f + UnityEngine.Random.Range(-20f, 20f), 0f), 100f);
 
         //Reset Ball
         _ball.localPosition = new Vector3(UnityEngine.Random.Range(30f, 50f), UnityEngine.Random.Range(0f, 10f), UnityEngine.Random.Range(-20f, 20f));

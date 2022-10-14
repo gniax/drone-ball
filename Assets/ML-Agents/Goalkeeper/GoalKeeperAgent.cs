@@ -38,7 +38,7 @@ public class GoalKeeperAgent : PGBaseAgent
     {
         _handler.ResetParameter();
         //Reset Car
-        controller.ResetCar(_startPosition, Quaternion.Euler(0f, 90f, 0f));
+        controller.ResetShip(_startPosition, Quaternion.Euler(0f, 90f, 0f));
 
         //Reset Ball
         _ball.localPosition = new Vector3(UnityEngine.Random.Range(-10f, 0f), UnityEngine.Random.Range(0f, 20f), UnityEngine.Random.Range(-30f, 30f));
