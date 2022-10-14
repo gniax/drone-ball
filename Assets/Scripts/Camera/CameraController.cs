@@ -23,8 +23,11 @@ public class CameraController : MonoBehaviour
     float _tmpRotationX = 0f;
     float _tmpRotationY = 0f;
 
-    Transform _ball;
-    public ShipController ShipController;
+    public Transform Ball;
+    public GameObject ShipControllableReference;
+    private Transform _shipControllableTR;
+    private ShipController _shipController;
+    private CustomInputManager _inputManager;
 
 
     Vector3 _checkVelocity;
@@ -35,22 +38,30 @@ public class CameraController : MonoBehaviour
     private bool _isBallCam = false;
     void Start()
     {
-        _ball = transform.parent.Find("Ball");
-        _pivotPosition = ShipController.transform.position + Vector3.up * cameraHeight;
+        _shipControllableTR = ShipControllableReference.transform;
+        _shipController = ShipControllableReference.GetComponentInChildren<ShipController>();
+        if (_shipController == null)
+        {
+            Debug.LogError("Vous devez mettre la reference de ShipControllable sur votre CameraController!!");
+            return;
+        }
+        _inputManager = ShipControllableReference.GetComponent<CustomInputManager>();
+
+        _pivotPosition = _shipControllableTR.position + Vector3.up * cameraHeight;
         _checkVelocity = Vector3.zero;
-        _prevPosistion = ShipController.transform.position;
+        _prevPosistion = _shipControllableTR.position;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Y"))
+        if (_inputManager?.myInput != null && _inputManager.myInput.Action4.IsPressed)
             _isBallCam = !_isBallCam;
     }
 
     private void FixedUpdate()
     {
-        _checkVelocity = (ShipController.transform.position - _prevPosistion) / Time.deltaTime;
-        _prevPosistion = ShipController.transform.position;
+        _checkVelocity = (_shipControllableTR.position - _prevPosistion) / Time.deltaTime;
+        _prevPosistion = _shipControllableTR.position;
         //Debug.Log("X: " + _checkVelocity.x + "Y: " + _checkVelocity.y + "Z: " + _checkVelocity.z);
         UpdatePivotElement(stiffnessPosition);
         UpdateCamDirection(stiffnessAngle);
@@ -78,9 +89,13 @@ public class CameraController : MonoBehaviour
         float minimumY = -10;
         float maximumY = 60F;
 
-        _tmpRotationX += Input.GetAxis("Camera X") * sensitivityX * (Time.deltaTime / _rotationUpdateTime);
+        if (_inputManager?.myInput == null)
+        {
+            return Vector3.zero;
+        }
+        _tmpRotationX += _inputManager.myInput.RightStickX.Value * sensitivityX * (Time.deltaTime / _rotationUpdateTime);
         _tmpRotationX = Mathf.Clamp(_tmpRotationX, minimumX, maximumX);
-        _tmpRotationY += Input.GetAxis("Camera Y") * sensitivityY * (Time.deltaTime / _rotationUpdateTime);
+        _tmpRotationY += _inputManager.myInput.RightStickY.Value * sensitivityY * (Time.deltaTime / _rotationUpdateTime);
         _tmpRotationY = Mathf.Clamp(_tmpRotationY, minimumY, maximumY);
 
         if (Time.time - _lastRotationUpdate >= _rotationUpdateTime)
@@ -98,15 +113,15 @@ public class CameraController : MonoBehaviour
     void UpdatePivotElement(float stiffnessPos)
     {
         Vector3 desiredPosition;
-        ShipController.ShipStates carState = ShipController.GetComponentInChildren<ShipController>().shipState;
+        ShipController.ShipStates carState = _shipController.shipState;
         bool grounded = carState == global::ShipController.ShipStates.AllCornersSurface || carState == global::ShipController.ShipStates.SomeCornersSurface;
         if (grounded)
         {
-            desiredPosition = ShipController.transform.position + ShipController.transform.up * cameraHeight;
+            desiredPosition = _shipControllableTR.position + _shipControllableTR.up * cameraHeight;
         }
         else
         {
-            desiredPosition = ShipController.transform.position + Vector3.up * cameraHeight;
+            desiredPosition = _shipControllableTR.position + Vector3.up * cameraHeight;
         }
         _pivotPosition = Vector3.Lerp(_pivotPosition, desiredPosition, stiffnessPos * Time.deltaTime);
     }
@@ -114,21 +129,22 @@ public class CameraController : MonoBehaviour
     void UpdateCamPositon(float stiffnessPos)
     {
         Vector3 desiredPosition;
-        ShipController.ShipStates carState = ShipController.GetComponentInChildren<ShipController>().shipState;
+        ShipController.ShipStates carState = _shipController.shipState;
         bool grounded = carState == global::ShipController.ShipStates.AllCornersSurface || carState == global::ShipController.ShipStates.SomeCornersSurface;
         if (_isBallCam)
         {
-            desiredPosition = _pivotPosition + (ShipController.transform.position - _ball.position).normalized * cameraDist;
+
+            desiredPosition = _pivotPosition + (_shipControllableTR.position - Ball.position).normalized * cameraDist;
         }
         else
         {
             if (grounded)
             {
-                desiredPosition = _pivotPosition - ShipController.transform.forward * cameraDist;
+                desiredPosition = _pivotPosition - _shipControllableTR.forward * cameraDist;
             }
             else
             {
-                desiredPosition = _pivotPosition - ShipController.GetComponent<Rigidbody>().velocity.normalized * cameraDist;
+                desiredPosition = _pivotPosition - ShipControllableReference.GetComponent<Rigidbody>().velocity.normalized * cameraDist;
             }
         }
         desiredPosition = AddRotation(desiredPosition);

@@ -9,7 +9,7 @@ namespace MatchController
     {
     public class MatchController : MonoBehaviour
     {
-        public TextMeshProUGUI informationMessage;
+        public TextMeshProUGUI[] informationMessage;
 
         private MatchTimeController _matchTimeController;
         private TeamController _teamController;
@@ -62,14 +62,21 @@ namespace MatchController
             
             for (int i = delay; i >= 0; --i)
             {
-                if (informationMessage?.text == null) continue;
-                char pluriel = i <= 1 ? '\0' : 's';
-                informationMessage.text = $"ESIPE VS ESIEE\nLa partie va commencer dans {i} seconde{pluriel} !";
+                foreach (var a in informationMessage)
+                {
+                    char pluriel = i <= 1 ? '\0' : 's';
+                    a.text = $"ESIPE VS ESIEE\nLa partie va commencer dans {i} seconde{pluriel} !";
+                }
+
                 yield return new WaitForSeconds(1f);
             }
 
-            if (informationMessage?.text != null)
-                informationMessage.text = "";
+            foreach (var a in informationMessage)
+            {
+                if (a?.text != null)
+                a.text = "";
+            }
+
             _hasStarted = false;
         }
 
@@ -81,18 +88,20 @@ namespace MatchController
             }
 
 
-
-            if(_mapData.blueScore == _mapData.orangeScore)
+            foreach (var a in informationMessage)
             {
-                informationMessage.text = "Match nul !";
-            }
-            else if(_mapData.blueScore > _mapData.orangeScore)
-            {
-                informationMessage.text = "L'équipe ESIPE a gagnée !";
-            }
-            else if (_mapData.orangeScore > _mapData.blueScore)
-            {
-                informationMessage.text = "L'équipe ESIEE a gagnée !";
+                if (_mapData.blueScore == _mapData.orangeScore)
+                {
+                    a.text = "Match nul !";
+                }
+                else if (_mapData.blueScore > _mapData.orangeScore)
+                {
+                    a.text = "L'équipe ESIPE a gagnée !";
+                }
+                else if (_mapData.orangeScore > _mapData.blueScore)
+                {
+                    a.text = "L'équipe ESIEE a gagnée !";
+                }
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MatchTimeController : MonoBehaviour
 {
-    public TextMeshProUGUI scoreTMP;
+    public TextMeshProUGUI[] scoreTMP;
 
     public bool paused = false;
     public int matchTimeSeconds = 300;
@@ -37,9 +37,9 @@ public class MatchTimeController : MonoBehaviour
         var seconds = Mathf.Floor(MatchTimer);
         _minutesRemaining = (int) seconds / 60;
         _secondsRemaining = (int) seconds % 60;
-        if (scoreTMP)
+        foreach (var a in scoreTMP)
         {
-            scoreTMP.text = String.Format("{0:00}:{1:00}", _minutesRemaining, _secondsRemaining);
+            a.text = String.Format("{0:00}:{1:00}", _minutesRemaining, _secondsRemaining);
         }
     }
 

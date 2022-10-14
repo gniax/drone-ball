@@ -8,8 +8,8 @@ using UnityEngine.Serialization;
 public class MapData : MonoBehaviour
 {
     // game score hud
-    public TextMeshProUGUI scoreEsipeTMP;
-    public TextMeshProUGUI scoreEsieeTMP;
+    public TextMeshProUGUI[] scoreEsipeTMP;
+    public TextMeshProUGUI[] scoreEsieeTMP;
 
     public float diag;
     public bool isScoredBlue = false;
@@ -30,14 +30,14 @@ public class MapData : MonoBehaviour
         _blueGoal = transform.Find("GoalLines").transform.Find("GoalLineBlue").GetComponent<GoalController>();
         _redGoal = transform.Find("GoalLines").transform.Find("GoalLineRed").GetComponent<GoalController>();
 
-        if (scoreEsipeTMP)
+        foreach (var score in scoreEsipeTMP)
         {
-            scoreEsipeTMP.text = blueScore.ToString();
+            score.text = blueScore.ToString();
         }
 
-        if (scoreEsieeTMP)
+        foreach (var score in scoreEsieeTMP)
         {
-            scoreEsieeTMP.text = orangeScore.ToString();
+            score.text = orangeScore.ToString();
         }
 
         /*
@@ -61,18 +61,18 @@ public class MapData : MonoBehaviour
         {
             isScoredBlue = true;
             blueScore++;
-            if (scoreEsipeTMP)
+            foreach (var score in scoreEsipeTMP)
             {
-                scoreEsipeTMP.text = blueScore.ToString();
+                score.text = blueScore.ToString();
             }
         }
         else
         {
             isScoredOrange = true;
             orangeScore++;
-            if (scoreEsieeTMP)
+            foreach (var score in scoreEsieeTMP)
             {
-                scoreEsieeTMP.text = orangeScore.ToString();
+                score.text = orangeScore.ToString();
             }
         }
     }

@@ -25,22 +25,20 @@ public class CustomInputManager : MonoBehaviour
 
         if (!isAgent)
         {
-
-            throttleInput = GetThrottle();
-            steerInput = GetSteerInput();
-
             if (myInput != null)
             {
+                throttleInput = GetThrottleInControl();
+                steerInput = GetSteerInputInControl();
 
                 yawInput = myInput.LeftStickX.Value;
                 pitchInput = -myInput.LeftStickY.Value;
                 rollInput = GetRollInputDevice();
 
-                isJump = Input.GetMouseButton(1) || Input.GetButton("A");
-                isJumpUp = Input.GetMouseButtonUp(1) || Input.GetButtonUp("A");
-                isJumpDown = Input.GetMouseButtonDown(1) || Input.GetButtonDown("A");
+                isJump = myInput.Action1.IsPressed;
+                isJumpUp = myInput.Action1.IsPressed;
+                isJumpDown = myInput.Action1.IsPressed;
 
-                isBoost = myInput.Action1.IsPressed;
+                isBoost = myInput.Action2.IsPressed;
                 isDrift =  myInput.Action3.IsPressed;
                 isAirRoll = myInput.Action3.IsPressed;
             }
@@ -65,6 +63,16 @@ public class CustomInputManager : MonoBehaviour
         return inputRoll;
     }
 
+    public float GetThrottleInControl()
+    {
+        float throttle = 0;
+
+        throttle -= myInput.LeftTrigger.Value;
+        throttle += myInput.RightTrigger.Value;
+
+        return throttle;
+    }
+
     static float GetThrottle()
     {
         float throttle = 0;
@@ -77,7 +85,13 @@ public class CustomInputManager : MonoBehaviour
         return throttle;
     }
 
-    static float GetSteerInput()
+    public float GetSteerInputInControl()
+    {
+        //return Mathf.MoveTowards(steerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime);
+        return myInput.LeftStickX.Value;
+    }
+
+    public float GetSteerInput()
     {
         //return Mathf.MoveTowards(steerInput, Input.GetAxis("Horizontal"), Time.fixedDeltaTime);
         return Input.GetAxis("Horizontal");
