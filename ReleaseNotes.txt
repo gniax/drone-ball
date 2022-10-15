@@ -1,0 +1,25 @@
+*-*-*-* DRONE BALL *-*-*-*
+
+Nom du jeu: DRONE BALL
+
+Equipe: 
+	- Marius DONNE (ESIPE)
+	- Léo MESBAH (ESIEE)
+	- Ouahib MOUSS (ESIEE)
+	- Rayan SOBH (ESIEE)
+	
+Nécessité de deux manettes
+Remarque: il vaut mieux connecter une manette en bluetooth et l'autre par câble.
+
+Contrôles:
+	- Joystick gauche : rotation X/Z
+	- Joystick droit : Camera
+	- O : Boost
+	- Carré : Drifter
+	- Triangle : centrer/décenter la caméra sur le ballon
+	- R2 : Accélérer
+	- L2 : Reculer
+	
+	
+
+
