@@ -1,35 +1,46 @@
-# Drone ball
-### Projet GAME JAM organisé par ESIEE Paris en 2022
+# Drone Ball
 
-## But 
-Match de foot sans gravité avec des drones.
+Split-screen Rocket League-like game with drones and low-gravity movement, built in Unity during a game jam.
 
-## Fonctionnement
-- Scoreboard en haut
-- Durée du match 5 minutes
-- 1V1 écran scindé avec contrôleurs
-- Vous pouvez accélerer avec ROND (boost) qui se recharge avec le temps pour aller plus vite
+## Overview
 
-## Contrôles
-- Joystick gauche: rotation<br/>
-- Joystick droit: camera<br/>
-- L2: Reculer<br/>
-- R2: Avancer<br/>
-- Carré: drifter<br/>
-- Rond: boost<br/>
-- Triangle: lock/delock la caméra vers le ballon
+Drone Ball is a local multiplayer prototype inspired by arcade sports games.
 
-## TODO
-- Menu pause<br/>
-- Ajouter le dodge directionnel<br/>
-- Augmenter la vitesse du drone + rotation<br/>
-- Ajouter le menu entraineemnt<br/>
-- Ajouter le menu 1V1 IA<br/>
-- Ajouter des menus parties à plusieurs (2V2 etc..)<br/>
+The concept is simple: a football match played with flying drones in a low-gravity environment, with fast movement, boost management, and ball tracking mechanics.
+
+## Gameplay
+
+- 1v1 local split-screen match
+- 5-minute matches
+- drone-based movement and control
+- boost system with recharge over time
+- optional camera lock on the ball
+
+## Controls
+
+- **Left stick** — rotation
+- **Right stick** — camera
+- **L2** — move backward
+- **R2** — move forward
+- **Square** — drift
+- **Circle** — boost
+- **Triangle** — lock / unlock camera on the ball
 
 ## Tech
-Unity 3D v2021.3.11f1
 
-## Assets
-[Sci-Fi Neon City (Ville Cyberpunk)](https://assetstore.unity.com/packages/3d/environments/sci-fi/scifi-neon-city-118580)<br/>
-[InControl (API Inputs Cross-Platform)](https://assetstore.unity.com/packages/tools/input-management/incontrol-14695)
+- Unity 2021.3.11f1
+- C#
+- ShaderLab / HLSL
+
+## Assets and tools
+
+- Sci-Fi Neon City
+- InControl (cross-platform input API)
+
+## Context
+
+This project was created during a game jam organized by ESIEE Paris in 2022.
+
+## Notes
+
+This repository is kept as an archive of the project in its final state.
